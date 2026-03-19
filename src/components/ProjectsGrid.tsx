@@ -1,5 +1,5 @@
 import React from 'react';
-
+ 
 type Project = {
   title: string;
   description: string;
@@ -7,8 +7,29 @@ type Project = {
   imageAlt: string;
   tags: string[];
 };
-
+ 
 const projects: Project[] = [
+  {
+    title: 'Reelstack',
+    description: 'A swipe based platform for film enjoyers to discover their next movie to watch.',
+    imageSrc: '/projects/reel_logo.png',
+    imageAlt: 'Reelstack project preview',
+    tags: ['React', 'Typescript', 'Vite']
+  },
+  {
+    title: 'This Portfolio',
+    description: 'My current portfolio website, where you are currently browsing.',
+    imageSrc: '/projects/portfolio_logo.png',
+    imageAlt: 'Portfolio project preview',
+    tags: ['Tailwind CSS', 'React', 'Typescript', 'Vite']
+  },
+  {
+    title: 'Study in Gray',
+    description: 'A ipad investigation clue-like game that uses machine learning in a inovative way.',
+    imageSrc: '/projects/study_logo.png',
+    imageAlt: 'Study in Gray project preview',
+    tags: ['CoreML', 'UIKit', 'AVFoundation','Xcode']
+  },
   {
     title: 'Hermes Tracking',
     description: 'Centralizes package tracking, providing real-time updates and automatic notifications.',
@@ -57,7 +78,7 @@ const projects: Project[] = [
     tags: ['SwiftUI', 'SwiftData', 'REST API']
   }
 ];
-
+ 
 export const ProjectsGrid: React.FC = () => {
   return (
     <section
@@ -76,41 +97,34 @@ export const ProjectsGrid: React.FC = () => {
           Selected Works
         </span>
       </div>
-
+ 
       {projects.map((project, index) => {
         const colClasses =
-          'project-card col-span-12 md:col-span-6 lg:col-span-4 p-8 grid-border-b group cursor-pointer block focus-visible:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-neutral-500';
+          'project-card col-span-12 md:col-span-6 lg:col-span-4 p-8 grid-border-b block';
         const borderRight =
           index === 0 || index === 1 || index === 3 || index === 4 ? ' grid-border-r' : '';
-
+ 
         return (
-          <a
+          <div
             key={project.title}
-            href="#"
-            aria-label={`View Project: ${project.title}`}
             className={colClasses + borderRight}
           >
-            <div className="aspect-video bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-sm mb-6 overflow-hidden relative flex items-center justify-center project-img transition-all duration-500 ease-out">
+            <div className="aspect-video bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-sm mb-6 overflow-hidden relative flex items-center justify-center project-img">
               <div className="absolute inset-0 bg-gradient-to-br from-neutral-200/50 dark:from-neutral-800/20 to-transparent pointer-events-none" />
               <img
                 src={project.imageSrc}
                 alt={project.imageAlt}
                 loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                className="h-full w-full object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
               />
             </div>
             <div className="flex justify-between items-start mb-3">
-              <h3 className="text-xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-200 group-hover:text-black dark:group-hover:text-white transition-colors">
+              <h3 className="text-xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-200">
                 {project.title}
               </h3>
-              <iconify-icon
-                icon="solar:arrow-right-up-linear"
-                className="text-neutral-400 dark:text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity"
-                aria-hidden="true"
-              ></iconify-icon>
             </div>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 font-medium mb-6 line-clamp-3">
               {project.description}
@@ -125,10 +139,10 @@ export const ProjectsGrid: React.FC = () => {
                 </span>
               ))}
             </div>
-          </a>
+          </div>
         );
       })}
     </section>
   );
 };
-
+ 

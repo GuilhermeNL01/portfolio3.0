@@ -48,13 +48,13 @@ export const Contact: React.FC = () => {
         </div>
 
         <div className="mt-16 space-y-4">
-          <a
+          {/* <a
             href="mailto:guilhermelobo2003@gmail.com"
             className="flex items-center gap-3 text-lg font-medium text-neutral-800 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
           >
             <iconify-icon icon="solar:letter-linear" className="text-xl" aria-hidden="true"></iconify-icon>
             guilhermelobo2003@gmail.com
-          </a>
+          </a> */}
         </div>
       </div>
 
