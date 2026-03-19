@@ -1,24 +1,63 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { sendForm } from '@emailjs/browser';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 
 export const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
+  const botFieldRef = useRef<HTMLInputElement>(null);
+
   const [formState, setFormState] = useState<FormState>('idle');
+
+  // Anti-spam
+  const [formLoadedAt, setFormLoadedAt] = useState<number>(Date.now());
+  const [honeypotName, setHoneypotName] = useState<string>('website');
+  const [lastSubmitTime, setLastSubmitTime] = useState<number>(0);
+
+  useEffect(() => {
+    setFormLoadedAt(Date.now());
+    const randomName = `field_${Math.random().toString(36).substring(2, 10)}`;
+    setHoneypotName(randomName);
+  }, []);
+
+  // ENV (Vite)
+  const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formRef.current) return;
 
+    const now = Date.now();
+
+    // Honeypot
+    if (botFieldRef.current?.value) {
+      setFormState('success');
+      return;
+    }
+
+    // Speed check
+    if (now - formLoadedAt < 1500) {
+      setFormState('error');
+      return;
+    }
+
+    // Rate limit
+    if (now - lastSubmitTime < 10000) {
+      setFormState('error');
+      return;
+    }
+
+    setLastSubmitTime(now);
     setFormState('loading');
 
     try {
       await sendForm(
-        'service_if2fucm',
-        'template_8swrof8',
+        SERVICE_ID,
+        TEMPLATE_ID,
         formRef.current,
-        's6J0Aoblk7MoYnsLe'
+        PUBLIC_KEY
       );
       setFormState('success');
       formRef.current.reset();
@@ -48,13 +87,7 @@ export const Contact: React.FC = () => {
         </div>
 
         <div className="mt-16 space-y-4">
-          {/* <a
-            href="mailto:guilhermelobo2003@gmail.com"
-            className="flex items-center gap-3 text-lg font-medium text-neutral-800 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
-          >
-            <iconify-icon icon="solar:letter-linear" className="text-xl" aria-hidden="true"></iconify-icon>
-            guilhermelobo2003@gmail.com
-          </a> */}
+          {/* email button intentionally unchanged */}
         </div>
       </div>
 
@@ -74,7 +107,24 @@ export const Contact: React.FC = () => {
             </button>
           </div>
         ) : (
-          <form ref={formRef} onSubmit={handleSubmit} className="w-full max-w-md space-y-10" aria-label="Contact Form">
+          <form ref={formRef} onSubmit={handleSubmit} className="w-full max-w-md space-y-10 relative" aria-label="Contact Form">
+            
+            {/* Honeypot (invisible, no layout impact) */}
+            <div
+              className="absolute left-[-9999px] top-[-9999px] opacity-0"
+              aria-hidden="true"
+            >
+              <label htmlFor={honeypotName}>Leave this field blank</label>
+              <input
+                ref={botFieldRef}
+                type="text"
+                id={honeypotName}
+                name={honeypotName}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
             <div className="relative">
               <input
                 type="text"
