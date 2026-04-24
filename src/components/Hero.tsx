@@ -35,7 +35,7 @@ export const Hero: React.FC = () => {
         </p>
         <div className="flex flex-wrap gap-4 mt-10">
           <a
-            href="/misc/CVENGuilherme.pdf"
+            href="/misc/GuilhermeLoboDevEn.pdf"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-950 text-sm font-semibold tracking-tight rounded-sm hover:bg-neutral-800 dark:hover:bg-neutral-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
