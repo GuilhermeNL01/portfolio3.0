@@ -1,5 +1,5 @@
 import React from 'react';
- 
+
 type Project = {
   title: string;
   description: string;
@@ -7,78 +7,77 @@ type Project = {
   imageAlt: string;
   tags: string[];
 };
- 
 const projects: Project[] = [
   {
     title: 'Reelstack',
-    description: 'A swipe based platform for film enjoyers to discover their next movie to watch.',
+    description: 'Uma plataforma baseada em gestos de deslizar para fãs de cinema descobrirem o próximo filme para assistir.',
     imageSrc: '/projects/reel_logo.png',
-    imageAlt: 'Reelstack project preview',
-    tags: ['React', 'Typescript', 'Vite']
+    imageAlt: 'Prévia do projeto Reelstack',
+    tags: ['React', 'TypeScript', 'Vite']
   },
   {
-    title: 'This Portfolio',
-    description: 'My current portfolio website, where you are currently browsing.',
+    title: 'Este Portfólio',
+    description: 'Meu site de portfólio atual, por onde você está navegando agora.',
     imageSrc: '/projects/portfolio_logo.png',
-    imageAlt: 'Portfolio project preview',
-    tags: ['Tailwind CSS', 'React', 'Typescript', 'Vite']
+    imageAlt: 'Prévia do projeto Portfólio',
+    tags: ['Tailwind CSS', 'React', 'TypeScript', 'Vite']
   },
   {
     title: 'Study in Gray',
-    description: 'A ipad investigation clue-like game that uses machine learning in a inovative way.',
+    description: 'Um jogo investigativo para iPad, inspirado em pistas e dedução, que usa machine learning de forma inovadora.',
     imageSrc: '/projects/study_logo.png',
-    imageAlt: 'Study in Gray project preview',
+    imageAlt: 'Prévia do projeto Study in Gray',
     tags: ['CoreML', 'UIKit', 'AVFoundation','Xcode']
   },
   {
     title: 'Hermes Tracking',
-    description: 'Centralizes package tracking, providing real-time updates and automatic notifications.',
+    description: 'Centraliza o rastreamento de encomendas, com atualizações em tempo real e notificações automáticas.',
     imageSrc: '/projects/hermes_logo.png',
-    imageAlt: 'Hermes Tracking project preview',
+    imageAlt: 'Prévia do projeto Hermes Tracking',
     tags: ['UIKit', 'MVC', 'Coordinator']
   },
   {
     title: 'Step Quest',
     description:
-      'A WatchOS app that turns daily walking into spy missions where users complete challenges.',
+      'Um app para watchOS que transforma caminhadas diárias em missões de espionagem com desafios.',
     imageSrc: '/projects/step_logo.png',
-    imageAlt: 'Step Quest project preview',
-    tags: ['WatchOS', 'SwiftUI', 'HealthKit']
+    imageAlt: 'Prévia do projeto Step Quest',
+    tags: ['watchOS', 'SwiftUI', 'HealthKit']
   },
   {
     title: 'Planetarium',
     description:
-      'An AR-based iPad app allowing users to explore the solar system by placing planets in real-world environments.',
+      'Um app de realidade aumentada para iPad que permite explorar o sistema solar posicionando planetas em ambientes reais.',
     imageSrc: '/projects/planetarium_logo.png',
-    imageAlt: 'Planetarium project preview',
+    imageAlt: 'Prévia do projeto Planetarium',
     tags: ['ARKit', 'RealityKit']
   },
   {
     title: 'Shyne',
     description:
-      'An app designed to improve social skills through interactive exercises and daily tracking.',
+      'Um app criado para desenvolver habilidades sociais com exercícios interativos e acompanhamento diário.',
     imageSrc: '/projects/shyne_logo.png',
-    imageAlt: 'Shyne project preview',
+    imageAlt: 'Prévia do projeto Shyne',
     tags: ['UIKit', 'MVVM-C', 'CoreData']
   },
   {
     title: 'Collapse',
     description:
-      'A 2D platformer where players navigate a collapsing world and master movement mechanics to survive.',
+      'Um jogo de plataforma 2D em que jogadores exploram um mundo em colapso e dominam mecânicas de movimento para sobreviver.',
     imageSrc: '/projects/collapse_logo.png',
-    imageAlt: 'Collapse project preview',
+    imageAlt: 'Prévia do projeto Collapse',
     tags: ['SpriteKit', 'GameplayKit']
   },
   {
     title: 'My Card Collection',
     description:
-      'A Magic: The Gathering card collection manager with search and organization features.',
+      'Um gerenciador de coleção de cartas de Magic: The Gathering com busca e recursos de organização.',
     imageSrc: '/projects/mycard_logo.png',
-    imageAlt: 'My Card Collection project preview',
+    imageAlt: 'Prévia do projeto My Card Collection',
     tags: ['SwiftUI', 'SwiftData', 'REST API']
   }
 ];
- 
+
 export const ProjectsGrid: React.FC = () => {
   return (
     <section
@@ -86,18 +85,18 @@ export const ProjectsGrid: React.FC = () => {
       className="grid grid-cols-12 grid-border-b"
       aria-labelledby="projects-heading"
     >
-      <div className="col-span-12 p-8 grid-border-b bg-neutral-50 dark:bg-neutral-950 z-10 sticky top-0 md:relative flex justify-between items-end">
+      <div className="col-span-12 p-8 grid-border-b bg-white dark:bg-[#131311] z-10 sticky top-0 md:relative flex justify-between items-end">
         <h2
           id="projects-heading"
           className="text-4xl md:text-5xl font-semibold tracking-tighter text-neutral-900 dark:text-neutral-100"
         >
-          Projects
+          Projetos
         </h2>
         <span className="text-sm font-medium tracking-tight text-neutral-500 uppercase hidden md:block">
-          Selected Works
+          Projetos selecionados
         </span>
       </div>
- 
+
       {projects.map((project, index) => {
         const colClasses =
           'project-card col-span-12 md:col-span-6 lg:col-span-4 p-8 grid-border-b block';
@@ -133,7 +132,7 @@ export const ProjectsGrid: React.FC = () => {
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs font-semibold tracking-tight px-2 py-1 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-sm"
+                  className="text-xs font-semibold tracking-tight px-2 py-1 bg-neutral-50 dark:bg-[#1B1B18] border border-neutral-900/15 dark:border-[#C5DCDC]/20 text-neutral-700 dark:text-neutral-300 rounded-sm"
                 >
                   {tag}
                 </span>
@@ -145,4 +144,3 @@ export const ProjectsGrid: React.FC = () => {
     </section>
   );
 };
- 

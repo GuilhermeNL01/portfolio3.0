@@ -43,7 +43,7 @@ export const App: React.FC = () => {
         href="#main-sections"
         className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 z-50 bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-900 px-4 py-2 text-sm font-semibold tracking-tight rounded-sm outline-none ring-2 ring-neutral-500 shadow-xl"
       >
-        Skip to main content
+        Pular para o conteúdo principal
       </a>
 
       <div className="bg-grid-12" aria-hidden="true">

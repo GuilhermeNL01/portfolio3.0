@@ -1,7 +1,23 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { sendForm } from '@emailjs/browser';
+import { CheckCircleIcon, SendIcon } from './Icons';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
+
+const contactLinks = [
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/guilherme-nunes-lobo-12967b258/'
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/GuilhermeNL01'
+  },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/g_nlobo'
+  }
+] as const;
 
 export const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -78,43 +94,53 @@ export const Contact: React.FC = () => {
             id="contact-heading"
             className="text-5xl md:text-7xl font-semibold tracking-tighter mb-6 text-neutral-900 dark:text-neutral-100"
           >
-            Contact Me
+            Contato
           </h2>
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-400 font-medium max-w-sm">
-            Feel free to reach out for opportunities, collaborations, or questions. Let&apos;s
-            build something exceptional.
+            Fique à vontade para entrar em contato sobre oportunidades, colaborações ou perguntas.
+            Vamos construir algo excepcional.
           </p>
         </div>
 
-        <div className="mt-16 space-y-4">
-          {/* email button intentionally unchanged */}
+        <div className="mt-12 flex flex-wrap gap-3">
+          {contactLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center rounded-sm border border-neutral-900/15 px-3 py-2 text-sm font-semibold tracking-tight text-neutral-800 transition-colors hover:bg-neutral-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-700 dark:border-[#C5DCDC]/25 dark:text-[#C5DCDC] dark:hover:bg-[#C5DCDC] dark:hover:text-[#131311] dark:focus-visible:ring-[#C5DCDC]"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
 
       <div className="col-span-12 md:col-span-6 p-8 md:p-16 flex items-center">
         {formState === 'success' ? (
           <div className="w-full max-w-md flex flex-col gap-4">
-            <iconify-icon icon="solar:check-circle-linear" className="text-5xl text-neutral-900 dark:text-neutral-100" aria-hidden="true"></iconify-icon>
-            <h3 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">Message sent!</h3>
+            <CheckCircleIcon className="h-12 w-12 text-neutral-900 dark:text-neutral-100" />
+            <h3 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">Mensagem enviada!</h3>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">
-              Thanks for reaching out. I'll get back to you as soon as possible.
+              Obrigado pelo contato. Vou te responder assim que possível.
             </p>
             <button
               onClick={() => setFormState('idle')}
               className="text-sm font-medium text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
             >
-              Send another message →
+              Enviar outra mensagem →
             </button>
           </div>
         ) : (
-          <form ref={formRef} onSubmit={handleSubmit} className="w-full max-w-md space-y-10 relative" aria-label="Contact Form">
+          <form ref={formRef} onSubmit={handleSubmit} className="w-full max-w-md space-y-10 relative" aria-label="Formulário de contato">
             
             {/* Honeypot (invisible, no layout impact) */}
             <div
               className="absolute left-[-9999px] top-[-9999px] opacity-0"
               aria-hidden="true"
             >
-              <label htmlFor={honeypotName}>Leave this field blank</label>
+              <label htmlFor={honeypotName}>Deixe este campo em branco</label>
               <input
                 ref={botFieldRef}
                 type="text"
@@ -140,7 +166,7 @@ export const Contact: React.FC = () => {
                 htmlFor="name"
                 className="absolute left-0 top-3 text-sm font-medium tracking-tight text-neutral-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-neutral-900 dark:peer-focus:text-neutral-400 peer-valid:-top-4 peer-valid:text-xs peer-valid:text-neutral-900 dark:peer-valid:text-neutral-400 cursor-text"
               >
-                Name
+                Nome
               </label>
             </div>
 
@@ -159,7 +185,7 @@ export const Contact: React.FC = () => {
                 htmlFor="email"
                 className="absolute left-0 top-3 text-sm font-medium tracking-tight text-neutral-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-neutral-900 dark:peer-focus:text-neutral-400 peer-valid:-top-4 peer-valid:text-xs peer-valid:text-neutral-900 dark:peer-valid:text-neutral-400 cursor-text"
               >
-                Email Address
+                E-mail
               </label>
             </div>
 
@@ -177,13 +203,13 @@ export const Contact: React.FC = () => {
                 htmlFor="message"
                 className="absolute left-0 top-3 text-sm font-medium tracking-tight text-neutral-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-neutral-900 dark:peer-focus:text-neutral-400 peer-valid:-top-4 peer-valid:text-xs peer-valid:text-neutral-900 dark:peer-valid:text-neutral-400 cursor-text"
               >
-                Message
+                Mensagem
               </label>
             </div>
 
             {formState === 'error' && (
               <p className="text-sm font-medium text-red-500" role="alert">
-                Something went wrong. Please try again or email me directly.
+                Algo deu errado. Tente novamente em alguns instantes.
               </p>
             )}
 
@@ -192,10 +218,8 @@ export const Contact: React.FC = () => {
               disabled={formState === 'loading'}
               className="w-full py-4 bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-950 text-sm font-semibold tracking-tight rounded-sm hover:bg-neutral-800 dark:hover:bg-neutral-300 transition-colors flex justify-center items-center gap-2 mt-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {formState === 'loading' ? 'Sending...' : 'Send Message'}
-              {formState !== 'loading' && (
-                <iconify-icon icon="solar:plain-linear" aria-hidden="true"></iconify-icon>
-              )}
+              {formState === 'loading' ? 'Enviando...' : 'Enviar mensagem'}
+              {formState !== 'loading' && <SendIcon className="h-4 w-4" />}
             </button>
           </form>
         )}

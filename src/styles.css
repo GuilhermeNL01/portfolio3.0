@@ -1,11 +1,13 @@
 :root {
-  --grid-color: rgba(0, 0, 0, 0.04);
-  --border-color: rgba(0, 0, 0, 0.08);
+  --surface-light: #ffffff;
+  --surface-dark: #131311;
+  --grid-color: rgba(19, 19, 17, 0.08);
+  --border-color: rgba(19, 19, 17, 0.14);
 }
 
 .dark {
-  --grid-color: rgba(255, 255, 255, 0.03);
-  --border-color: rgba(255, 255, 255, 0.1);
+  --grid-color: rgba(197, 220, 220, 0.08);
+  --border-color: rgba(197, 220, 220, 0.16);
 }
 
 html {
@@ -16,7 +18,12 @@ html {
 }
 
 body {
+  background: var(--surface-light);
   scroll-behavior: smooth;
+}
+
+.dark body {
+  background: var(--surface-dark);
 }
 
 section[id] {
@@ -27,7 +34,7 @@ body {
   overflow-wrap: anywhere;
 }
 
-iconify-icon {
+.inline-icon {
   display: inline-block;
   line-height: 1;
   vertical-align: -0.125em;
@@ -125,8 +132,6 @@ iconify-icon {
   width: max-content;
   animation: marquee 35s linear infinite;
 }
-
-
 
 @keyframes draw-line {
   0% {

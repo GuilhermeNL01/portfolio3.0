@@ -7,7 +7,7 @@ export const Footer: React.FC = () => {
       role="contentinfo"
     >
       <div className="col-span-12 md:col-span-6 flex items-center justify-center md:justify-start">
-        © 2026 Guilherme Lobo. All rights reserved.
+        © 2026 Guilherme Lobo. Todos os direitos reservados.
       </div>
       <div className="col-span-12 md:col-span-6 flex items-center justify-center md:justify-end gap-6 mt-4 md:mt-0">
         <a
