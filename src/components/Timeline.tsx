@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { ArrowUpRightIcon, DiplomaIcon, GlobeIcon } from './Icons';
 
 const certifications = [
   {
@@ -45,17 +46,17 @@ export const Timeline: React.FC = () => {
       className="grid grid-cols-12 grid-border-b"
       aria-labelledby="timeline-heading"
     >
-      <div className="col-span-12 md:col-span-4 p-8 md:grid-border-r bg-neutral-50/80 dark:bg-neutral-950/80 backdrop-blur-md z-10">
+      <div className="col-span-12 md:col-span-4 p-8 md:grid-border-r bg-white/80 dark:bg-[#131311]/80 backdrop-blur-md z-10">
         <div className="flex flex-col justify-start">
-        <h2
-          id="timeline-heading"
-          className="text-4xl md:text-5xl font-semibold tracking-tighter text-neutral-900 dark:text-neutral-100 leading-none"
-        >
-          Timeline
-        </h2>
-        <p className="mt-4 text-sm text-neutral-600 dark:text-neutral-500 font-medium tracking-tight max-w-xs">
-          A chronological map of education, certifications, and technical development.
-        </p>
+          <h2
+            id="timeline-heading"
+            className="text-4xl md:text-5xl font-semibold tracking-tighter text-neutral-900 dark:text-neutral-100 leading-none"
+          >
+            Trajetória
+          </h2>
+          <p className="mt-4 text-sm text-neutral-600 dark:text-neutral-500 font-medium tracking-tight max-w-xs">
+            Um mapa cronológico da minha formação, certificações e evolução técnica.
+          </p>
         </div>
       </div>
 
@@ -82,7 +83,7 @@ export const Timeline: React.FC = () => {
                 Apple Developer Academy
               </h3>
               <p className="text-base text-neutral-600 dark:text-neutral-400 font-medium">
-                App Development for Apple Platforms
+                Desenvolvimento de apps para plataformas Apple
               </p>
             </div>
           </div>
@@ -98,7 +99,7 @@ export const Timeline: React.FC = () => {
                 2022 – 2025
               </span>
               <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-200">
-                Computer Science Bachelor&apos;s
+                Bacharelado em Ciência da Computação
               </h3>
               <p className="text-base text-neutral-600 dark:text-neutral-400 font-medium">
                 Universidade Católica de Brasília (UCB)
@@ -116,12 +117,8 @@ export const Timeline: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="flex flex-col gap-4">
                 <h3 className="text-lg font-semibold tracking-tight text-neutral-900 dark:text-neutral-200 flex items-center gap-2">
-                  <iconify-icon
-                    icon="solar:diploma-linear"
-                    style={{ strokeWidth: 1.5 as unknown as string }}
-                    aria-hidden="true"
-                  ></iconify-icon>
-                  Certifications
+                  <DiplomaIcon className="h-5 w-5" />
+                  Certificações
                 </h3>
                 <ul className="space-y-4">
                   {certifications.map((cert) => (
@@ -130,8 +127,8 @@ export const Timeline: React.FC = () => {
                         href={cert.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="border border-neutral-200 dark:border-neutral-800 p-4 rounded-sm bg-white dark:bg-neutral-900/20 hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-50 dark:focus-visible:ring-offset-neutral-950"
-                        aria-label={`Open certification: ${cert.title}`}
+                        className="border border-neutral-900/15 dark:border-[#C5DCDC]/20 p-4 rounded-sm bg-white dark:bg-[#1B1B18] hover:bg-neutral-50 dark:hover:bg-[#22221E] transition-colors block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#131311]"
+                        aria-label={`Abrir certificação: ${cert.title}`}
                       >
                         <div className="flex items-start justify-between gap-4">
                           <div>
@@ -140,11 +137,7 @@ export const Timeline: React.FC = () => {
                             </p>
                             <p className="text-xs text-neutral-500 mt-1">{cert.subtitle}</p>
                           </div>
-                          <iconify-icon
-                            icon="solar:arrow-right-up-linear"
-                            className="text-neutral-400 dark:text-neutral-600 mt-0.5 shrink-0"
-                            aria-hidden="true"
-                          ></iconify-icon>
+                          <ArrowUpRightIcon className="mt-0.5 h-4 w-4 shrink-0 text-neutral-500 dark:text-neutral-500" />
                         </div>
                       </a>
                     </li>
@@ -154,36 +147,32 @@ export const Timeline: React.FC = () => {
 
               <div className="flex flex-col gap-4">
                 <h3 className="text-lg font-semibold tracking-tight text-neutral-900 dark:text-neutral-200 flex items-center gap-2">
-                  <iconify-icon
-                    icon="solar:global-linear"
-                    style={{ strokeWidth: 1.5 as unknown as string }}
-                    aria-hidden="true"
-                  ></iconify-icon>
-                  Languages
+                  <GlobeIcon className="h-5 w-5" />
+                  Idiomas
                 </h3>
                 <div className="flex flex-col gap-3">
                   <div className="flex justify-between items-center border-b border-neutral-200 dark:border-neutral-800/50 pb-2">
                     <span className="text-sm font-medium text-neutral-800 dark:text-neutral-300">
-                      English
+                      Inglês
                     </span>
                     <span className="text-xs font-semibold tracking-tight text-neutral-500">
-                      Advanced
+                      Avançado
                     </span>
                   </div>
                   <div className="flex justify-between items-center border-b border-neutral-200 dark:border-neutral-800/50 pb-2">
                     <span className="text-sm font-medium text-neutral-800 dark:text-neutral-300">
-                      Spanish
+                      Espanhol
                     </span>
                     <span className="text-xs font-semibold tracking-tight text-neutral-500">
-                      Basic
+                      Básico
                     </span>
                   </div>
                   <div className="flex justify-between items-center border-b border-neutral-200 dark:border-neutral-800/50 pb-2">
                     <span className="text-sm font-medium text-neutral-800 dark:text-neutral-300">
-                      Portuguese
+                      Português
                     </span>
                     <span className="text-xs font-semibold tracking-tight text-neutral-500">
-                      Native
+                      Nativo
                     </span>
                   </div>
                 </div>

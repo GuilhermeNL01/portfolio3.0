@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { MoonIcon, SunIcon } from './Icons';
+
+type Theme = 'light' | 'dark';
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() =>
+    document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  );
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleTheme = () => setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      // Theme still works for the current session if storage is unavailable.
+    }
+  }, [theme]);
 
   return (
     <header className="relative z-50">
       <nav
-        className="grid grid-cols-4 md:grid-cols-12 grid-border-b py-6 px-4 md:px-8 animate-fade-in bg-white dark:bg-neutral-950"
-        aria-label="Main Navigation"
+        className="grid grid-cols-4 md:grid-cols-12 grid-border-b py-6 px-4 md:px-8 animate-fade-in bg-white/95 dark:bg-[#131311]/95 backdrop-blur-md"
+        aria-label="Navegação principal"
       >
         <div className="col-span-2 md:col-span-4 flex items-center">
           <span className="text-xl font-semibold tracking-tighter uppercase" aria-hidden="true">
@@ -18,33 +34,42 @@ export const Navbar: React.FC = () => {
           <span className="sr-only">Guilherme Lobo</span>
         </div>
 
-        <div className="col-span-2 md:col-span-8 flex justify-end items-center text-sm font-medium tracking-tight text-neutral-600 dark:text-neutral-400">
-          
+        <div className="col-span-2 md:col-span-8 flex justify-end items-center gap-4 text-sm font-medium tracking-tight text-neutral-700 dark:text-neutral-300">
           <div className="hidden md:flex gap-6 items-center">
             <a href="#projects" className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm">
-              Projects
+              Projetos
             </a>
             <a href="#experience" className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm">
-              Experience
+              Experiência
             </a>
             <a href="#contact" className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm">
-              Contact
+              Contato
             </a>
           </div>
 
           <button
+            type="button"
+            onClick={toggleTheme}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-neutral-900/15 dark:border-[#C5DCDC]/25 text-neutral-900 dark:text-[#C5DCDC] hover:bg-neutral-900/5 dark:hover:bg-[#C5DCDC]/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-700 dark:focus-visible:ring-[#C5DCDC]"
+            aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+            title={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+          >
+            {theme === 'dark' ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
+          </button>
+
+          <button
+            type="button"
             onClick={toggleMenu}
-            className="md:hidden p-2 -mr-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
+            className="md:hidden p-2 -mr-2 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
             aria-expanded={isMenuOpen}
-            aria-label="Toggle navigation menu"
+            aria-controls="mobile-navigation"
+            aria-label={isMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
           >
             {isMenuOpen ? (
-            
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-             
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
               </svg>
@@ -53,18 +78,20 @@ export const Navbar: React.FC = () => {
         </div>
       </nav>
 
-      
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-neutral-950 grid-border-b shadow-lg animate-fade-in">
-          <div className="flex flex-col px-4 py-6 gap-6 text-sm font-medium tracking-tight text-neutral-600 dark:text-neutral-400">
+        <div
+          id="mobile-navigation"
+          className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-[#131311] grid-border-b shadow-lg animate-fade-in"
+        >
+          <div className="flex flex-col px-4 py-6 gap-6 text-sm font-medium tracking-tight text-neutral-700 dark:text-neutral-300">
             <a href="#projects" onClick={toggleMenu} className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
-              Projects
+              Projetos
             </a>
             <a href="#experience" onClick={toggleMenu} className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
-              Experience
+              Experiência
             </a>
             <a href="#contact" onClick={toggleMenu} className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
-              Contact
+              Contato
             </a>
           </div>
         </div>

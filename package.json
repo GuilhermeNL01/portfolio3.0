@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/build-tailwind.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/build-tailwind.mjs",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "echo \"No linter configured\""
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

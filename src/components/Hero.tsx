@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowRightIcon, CodeIcon, DocumentIcon } from './Icons';
 
 export const Hero: React.FC = () => {
   return (
@@ -9,66 +10,56 @@ export const Hero: React.FC = () => {
       <div className="col-span-12 md:col-span-8 md:grid-border-r pr-0 md:pr-12 flex flex-col justify-end">
         <div className="animate-fade-in delay-100 space-y-4">
           <p className="text-sm font-medium tracking-tight text-neutral-500 uppercase flex items-center gap-2">
-            <iconify-icon
-              icon="solar:apple-linear"
-              style={{ strokeWidth: 1.5 as unknown as string }}
-              aria-hidden="true"
-            ></iconify-icon>
-            Software Developer
+            <CodeIcon className="inline-icon h-4 w-4" />
+            Desenvolvedor de Software
           </p>
           <h1
-            id="hero-heading "
+            id="hero-heading"
             className="text-6xl md:text-8xl lg:text-9xl font-semibold tracking-tighter leading-none text-neutral-900 dark:text-neutral-100"
           >
             Guilherme <br /> Lobo
           </h1>
           <h2 className="text-2xl md:text-4xl font-medium tracking-tight text-neutral-600 dark:text-neutral-400 mt-2">
-             Developer
+            Desenvolvedor
           </h2>
         </div>
       </div>
 
       <div className="col-span-12 md:col-span-4 pl-0 md:pl-12 pt-12 md:pt-0 flex flex-col justify-end animate-fade-in delay-200">
         <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-md font-medium">
-        I’m a software developer focused on building scalable, clean, and user-friendly applications.
-
+          Sou desenvolvedor de software focado em criar aplicações escaláveis, limpas e fáceis de usar.
         </p>
         <div className="flex flex-wrap gap-4 mt-10">
           <a
-            href="/misc/CVENGuilherme.pdf"
+            href="/curriculo.html"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-950 text-sm font-semibold tracking-tight rounded-sm hover:bg-neutral-800 dark:hover:bg-neutral-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
           >
-            View CV
-            <iconify-icon
-              icon="solar:document-linear"
-              style={{ strokeWidth: 1.5 as unknown as string }}
-              aria-hidden="true"
-            ></iconify-icon>
+            Ver currículo
+            <DocumentIcon className="inline-icon h-4 w-4" />
           </a>
           <a
             href="#projects"
             className="inline-flex items-center gap-2 px-6 py-3 border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-200 text-sm font-semibold tracking-tight rounded-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
           >
-            View Projects
-            <iconify-icon
-              icon="solar:arrow-right-linear"
-              style={{ strokeWidth: 1.5 as unknown as string }}
-              aria-hidden="true"
-            ></iconify-icon>
+            Ver projetos
+            <ArrowRightIcon className="inline-icon h-4 w-4" />
           </a>
         </div>
       </div>
 
-      <div className="col-span-12 mt-16 md:mt-24 border border-neutral-200 dark:border-neutral-800 rounded-lg bg-white dark:bg-[#0a0a0a] shadow-xl dark:shadow-2xl animate-fade-in delay-300 relative overflow-hidden group">
+      <div className="col-span-12 mt-16 md:mt-24 border border-neutral-900/15 dark:border-[#C5DCDC]/20 rounded-lg bg-white dark:bg-[#131311] shadow-xl dark:shadow-2xl animate-fade-in delay-300 relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
-        <div className="h-10 bg-neutral-50 dark:bg-[#121212] border-b border-neutral-200 dark:border-neutral-800 flex items-center px-4 gap-2">
+        <div className="h-10 bg-neutral-50 dark:bg-[#1B1B18] border-b border-neutral-900/15 dark:border-[#C5DCDC]/20 flex items-center px-4 gap-2">
           <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]" />
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]" />
           <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]" />
           <div className="ml-auto flex items-center gap-2 text-xs font-medium tracking-tight text-neutral-500 font-mono">
-            <iconify-icon icon="logos:swift"></iconify-icon> Portfolio.swift
+            <span className="inline-flex h-4 w-4 items-center justify-center rounded-sm bg-white text-[9px] font-black text-[#131311] dark:bg-[#C5DCDC]">
+              S
+            </span>
+            Portfolio.swift
           </div>
         </div>
         <div className="p-6 md:p-8 font-mono text-sm md:text-base leading-relaxed text-neutral-700 dark:text-neutral-300 overflow-x-auto">
