@@ -9,6 +9,14 @@ type Project = {
 };
 const projects: Project[] = [
   {
+    title: 'Sistema Confeitaria',
+    description: 'Site e Sistema de gerenciamento para uma confeitaria, incluindo controle de estoque, vendas e relatórios financeiros.',
+    imageSrc: '/projects/confeitaria_logo.png',
+    imageAlt: 'Prévia do projeto Sistema Confeitaria',
+    tags: ['React', 'JavaScript', 'Vite', 'Node.js','Express','PostgreSQL']
+  },
+  {
+    
     title: 'Reelstack',
     description: 'Uma plataforma baseada em gestos de deslizar para fãs de cinema descobrirem o próximo filme para assistir.',
     imageSrc: '/projects/reel_logo.png',
