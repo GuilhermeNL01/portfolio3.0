@@ -6,6 +6,7 @@ import { Timeline } from './components/Timeline';
 import { ProjectsGrid } from './components/ProjectsGrid';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { cancelSmoothScroll, smoothScrollToId } from './utils/smoothScroll';
 
 export const App: React.FC = () => {
   useEffect(() => {
@@ -25,13 +26,14 @@ export const App: React.FC = () => {
       if (!target) return;
 
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      history.pushState(null, '', `#${encodeURIComponent(id)}`);
+      smoothScrollToId(id);
     };
 
-    document.addEventListener('click', onClick);
-    return () => document.removeEventListener('click', onClick);
+    document.addEventListener('click', onClick, { capture: true });
+    return () => {
+      document.removeEventListener('click', onClick, { capture: true });
+      cancelSmoothScroll();
+    };
   }, []);
 
   return (

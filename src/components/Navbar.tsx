@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { MoonIcon, SunIcon } from './Icons';
+import { smoothScrollToId } from '../utils/smoothScroll';
 
 type Theme = 'light' | 'dark';
+
+const navItems = [
+  { targetId: 'projects', label: 'Projetos' },
+  { targetId: 'experience', label: 'Experiência' },
+  { targetId: 'contact', label: 'Contato' }
+] as const;
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,8 +16,12 @@ export const Navbar: React.FC = () => {
     document.documentElement.classList.contains('dark') ? 'dark' : 'light'
   );
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen((currentState) => !currentState);
   const toggleTheme = () => setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+  const navigateToSection = (targetId: string) => {
+    setIsMenuOpen(false);
+    smoothScrollToId(targetId);
+  };
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -36,15 +47,16 @@ export const Navbar: React.FC = () => {
 
         <div className="col-span-2 md:col-span-8 flex justify-end items-center gap-4 text-sm font-medium tracking-tight text-neutral-700 dark:text-neutral-300">
           <div className="hidden md:flex gap-6 items-center">
-            <a href="#projects" className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm">
-              Projetos
-            </a>
-            <a href="#experience" className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm">
-              Experiência
-            </a>
-            <a href="#contact" className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm">
-              Contato
-            </a>
+            {navItems.map((item) => (
+              <button
+                key={item.targetId}
+                type="button"
+                onClick={() => navigateToSection(item.targetId)}
+                className="bg-transparent p-0 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm cursor-pointer"
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
 
           <button
@@ -84,15 +96,16 @@ export const Navbar: React.FC = () => {
           className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-[#131311] grid-border-b shadow-lg animate-fade-in"
         >
           <div className="flex flex-col px-4 py-6 gap-6 text-sm font-medium tracking-tight text-neutral-700 dark:text-neutral-300">
-            <a href="#projects" onClick={toggleMenu} className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
-              Projetos
-            </a>
-            <a href="#experience" onClick={toggleMenu} className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
-              Experiência
-            </a>
-            <a href="#contact" onClick={toggleMenu} className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
-              Contato
-            </a>
+            {navItems.map((item) => (
+              <button
+                key={item.targetId}
+                type="button"
+                onClick={() => navigateToSection(item.targetId)}
+                className="bg-transparent p-0 text-left hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors cursor-pointer"
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
         </div>
       )}
