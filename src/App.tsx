@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TechStack } from './components/TechStack';
@@ -6,16 +6,33 @@ import { Timeline } from './components/Timeline';
 import { ProjectsGrid } from './components/ProjectsGrid';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { ProjectDetail } from './components/ProjectDetail';
 import { cancelSmoothScroll, smoothScrollToId } from './utils/smoothScroll';
+import { ProjectData } from './data/projectsData';
 
 export const App: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
+  const savedScrollY = useRef(0);
+
+  // Restore scroll position when returning from project detail
   useEffect(() => {
+    if (!selectedProject) {
+      window.scrollTo({ top: savedScrollY.current, behavior: 'instant' as ScrollBehavior });
+    }
+  }, [selectedProject]);
+
+  // Smooth-scroll for anchor links (main portfolio page only)
+  useEffect(() => {
+    if (selectedProject) return;
+
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented) return;
       if (e.button !== 0) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
-      const anchor = (e.target as HTMLElement | null)?.closest('a[href^="#"]') as HTMLAnchorElement | null;
+      const anchor = (e.target as HTMLElement | null)?.closest(
+        'a[href^="#"]'
+      ) as HTMLAnchorElement | null;
       if (!anchor) return;
 
       const href = anchor.getAttribute('href');
@@ -34,13 +51,23 @@ export const App: React.FC = () => {
       document.removeEventListener('click', onClick, { capture: true });
       cancelSmoothScroll();
     };
-  }, []);
+  }, [selectedProject]);
+
+  const handleProjectSelect = (project: ProjectData) => {
+    savedScrollY.current = window.scrollY;
+    setSelectedProject(project);
+  };
+
+  const handleBack = () => {
+    setSelectedProject(null);
+  };
+
+  if (selectedProject) {
+    return <ProjectDetail project={selectedProject} onBack={handleBack} />;
+  }
 
   return (
-    <main
-      id="main-content"
-      className="relative z-10 w-full max-w-screen-2xl mx-auto px-4 md:px-8"
-    >
+    <main id="main-content" className="relative z-10 w-full max-w-screen-2xl mx-auto px-4 md:px-8">
       <a
         href="#main-sections"
         className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 z-50 bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-900 px-4 py-2 text-sm font-semibold tracking-tight rounded-sm outline-none ring-2 ring-neutral-500 shadow-xl"
@@ -59,11 +86,10 @@ export const App: React.FC = () => {
         <Hero />
         <TechStack />
         <Timeline />
-        <ProjectsGrid />
+        <ProjectsGrid onProjectSelect={handleProjectSelect} />
         <Contact />
         <Footer />
       </div>
     </main>
   );
 };
-

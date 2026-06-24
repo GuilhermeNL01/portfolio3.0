@@ -1,92 +1,11 @@
 import React from 'react';
+import { projectsData, ProjectData } from '../data/projectsData';
 
-type Project = {
-  title: string;
-  description: string;
-  imageSrc: string;
-  imageAlt: string;
-  tags: string[];
+type Props = {
+  onProjectSelect: (project: ProjectData) => void;
 };
-const projects: Project[] = [
-  {
-    title: 'Sistema Confeitaria',
-    description: 'Site e Sistema de gerenciamento para uma confeitaria, incluindo controle de estoque, vendas e relatórios financeiros.',
-    imageSrc: '/projects/confeitaria_logo.png',
-    imageAlt: 'Prévia do projeto Sistema Confeitaria',
-    tags: ['React', 'JavaScript', 'Vite', 'Node.js','Express','PostgreSQL']
-  },
-  {
-    
-    title: 'Reelstack',
-    description: 'Uma plataforma baseada em gestos de deslizar para fãs de cinema descobrirem o próximo filme para assistir.',
-    imageSrc: '/projects/reel_logo.png',
-    imageAlt: 'Prévia do projeto Reelstack',
-    tags: ['React', 'TypeScript', 'Vite']
-  },
-  {
-    title: 'Este Portfólio',
-    description: 'Meu site de portfólio atual, por onde você está navegando agora.',
-    imageSrc: '/projects/portfolio_logo.png',
-    imageAlt: 'Prévia do projeto Portfólio',
-    tags: ['Tailwind CSS', 'React', 'TypeScript', 'Vite']
-  },
-  {
-    title: 'Study in Gray',
-    description: 'Um jogo investigativo para iPad, inspirado em pistas e dedução, que usa machine learning de forma inovadora.',
-    imageSrc: '/projects/study_logo.png',
-    imageAlt: 'Prévia do projeto Study in Gray',
-    tags: ['CoreML', 'UIKit', 'AVFoundation','Xcode']
-  },
-  {
-    title: 'Hermes Tracking',
-    description: 'Centraliza o rastreamento de encomendas, com atualizações em tempo real e notificações automáticas.',
-    imageSrc: '/projects/hermes_logo.png',
-    imageAlt: 'Prévia do projeto Hermes Tracking',
-    tags: ['UIKit', 'MVC', 'Coordinator']
-  },
-  {
-    title: 'Step Quest',
-    description:
-      'Um app para watchOS que transforma caminhadas diárias em missões de espionagem com desafios.',
-    imageSrc: '/projects/step_logo.png',
-    imageAlt: 'Prévia do projeto Step Quest',
-    tags: ['watchOS', 'SwiftUI', 'HealthKit']
-  },
-  {
-    title: 'Planetarium',
-    description:
-      'Um app de realidade aumentada para iPad que permite explorar o sistema solar posicionando planetas em ambientes reais.',
-    imageSrc: '/projects/planetarium_logo.png',
-    imageAlt: 'Prévia do projeto Planetarium',
-    tags: ['ARKit', 'RealityKit']
-  },
-  {
-    title: 'Shyne',
-    description:
-      'Um app criado para desenvolver habilidades sociais com exercícios interativos e acompanhamento diário.',
-    imageSrc: '/projects/shyne_logo.png',
-    imageAlt: 'Prévia do projeto Shyne',
-    tags: ['UIKit', 'MVVM-C', 'CoreData']
-  },
-  {
-    title: 'Collapse',
-    description:
-      'Um jogo de plataforma 2D em que jogadores exploram um mundo em colapso e dominam mecânicas de movimento para sobreviver.',
-    imageSrc: '/projects/collapse_logo.png',
-    imageAlt: 'Prévia do projeto Collapse',
-    tags: ['SpriteKit', 'GameplayKit']
-  },
-  {
-    title: 'My Card Collection',
-    description:
-      'Um gerenciador de coleção de cartas de Magic: The Gathering com busca e recursos de organização.',
-    imageSrc: '/projects/mycard_logo.png',
-    imageAlt: 'Prévia do projeto My Card Collection',
-    tags: ['SwiftUI', 'SwiftData', 'REST API']
-  }
-];
 
-export const ProjectsGrid: React.FC = () => {
+export const ProjectsGrid: React.FC<Props> = ({ onProjectSelect }) => {
   return (
     <section
       id="projects"
@@ -105,23 +24,25 @@ export const ProjectsGrid: React.FC = () => {
         </span>
       </div>
 
-      {projects.map((project, index) => {
+      {projectsData.map((project, index) => {
         const colClasses =
-          'project-card col-span-12 md:col-span-6 lg:col-span-4 p-8 grid-border-b block';
+          'project-card col-span-12 md:col-span-6 lg:col-span-4 p-8 grid-border-b cursor-pointer text-left bg-transparent';
         const borderRight =
-          index === 0 || index === 1 || index === 3 || index === 4 ? ' grid-border-r' : '';
- 
+          index % 3 !== 2 && index + 1 < projectsData.length ? ' grid-border-r' : '';
+
         return (
-          <div
-            key={project.title}
+          <button
+            key={project.id}
+            type="button"
             className={colClasses + borderRight}
+            onClick={() => onProjectSelect(project)}
+            aria-label={`Ver detalhes de ${project.title}`}
           >
             <div className="aspect-video bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-sm mb-6 overflow-hidden relative flex items-center justify-center project-img">
               <div className="absolute inset-0 bg-gradient-to-br from-neutral-200/50 dark:from-neutral-800/20 to-transparent pointer-events-none" />
               <img
                 src={project.imageSrc}
                 alt={project.imageAlt}
-                loading="lazy"
                 className="h-full w-full object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -146,7 +67,7 @@ export const ProjectsGrid: React.FC = () => {
                 </span>
               ))}
             </div>
-          </div>
+          </button>
         );
       })}
     </section>
