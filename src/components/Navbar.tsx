@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { MoonIcon, SunIcon } from './Icons';
 import { smoothScrollToId } from '../utils/smoothScroll';
-
-type Theme = 'light' | 'dark';
+import { useTheme } from '../context/ThemeContext';
 
 const navItems = [
+  { targetId: 'about', label: 'Sobre' },
   { targetId: 'projects', label: 'Projetos' },
   { targetId: 'experience', label: 'Experiência' },
   { targetId: 'contact', label: 'Contato' }
@@ -12,25 +12,13 @@ const navItems = [
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<Theme>(() =>
-    document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-  );
+  const { theme, toggleTheme } = useTheme();
 
   const toggleMenu = () => setIsMenuOpen((currentState) => !currentState);
-  const toggleTheme = () => setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
   const navigateToSection = (targetId: string) => {
     setIsMenuOpen(false);
     smoothScrollToId(targetId);
   };
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    try {
-      localStorage.setItem('theme', theme);
-    } catch {
-      // Theme still works for the current session if storage is unavailable.
-    }
-  }, [theme]);
 
   return (
     <header className="relative z-50">
@@ -78,12 +66,30 @@ export const Navbar: React.FC = () => {
             aria-label={isMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
           >
             {isMenuOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
               </svg>
             )}
           </button>

@@ -31,6 +31,8 @@ export type ProjectData = {
   status: ProjectStatus;
   techStack: TechIcon[];
   sections: ProjectSection[];
+  githubUrl?: string;
+  demoUrl?: string;
 };
 
 export const projectsData: ProjectData[] = [
@@ -202,6 +204,7 @@ export const projectsData: ProjectData[] = [
   {
     id: 'study-in-gray',
     title: 'Study in Gray',
+    githubUrl: 'https://github.com/GuilhermeNL01/MiniChallenge04',
     description:
       'Um jogo investigativo para iPad, inspirado em pistas e dedução, que usa machine learning de forma inovadora.',
     imageSrc: '/projects/study_logo.png',
@@ -228,31 +231,37 @@ export const projectsData: ProjectData[] = [
         id: 'visao',
         title: 'A Visão',
         content:
-          'Inspirado em detetives clássicos como Sherlock Holmes, o jogo coloca o jogador no papel de investigador que usa a câmera do iPad para escanear o ambiente e identificar pistas. O CoreML interpreta objetos do mundo real e os conecta à narrativa do caso em andamento.'
+          'Inspirado em clássicos da literatura investigativa, como Sherlock Holmes, o jogo coloca o jogador no papel de um detetive encarregado de solucionar um crime. Ao longo da investigação, o jogador coleta e analisa pistas que são processadas por técnicas de Machine Learning, auxiliando na identificação do principal suspeito. Como parte da mecânica central, desenvolvemos um sistema inteligente de avaliação de suspeitos que ajusta dinamicamente o nível de suspeita de cada personagem com base nas evidências encontradas.'
       },
       {
         id: 'engenharia',
         title: 'A Engenharia',
         content:
-          'UIKit gerencia as telas e a narrativa. AVFoundation captura o feed da câmera em tempo real, que é processado pelo CoreML para reconhecimento de objetos. A pontuação de confiança do modelo determina a relevância da pista encontrada.',
+          'UIKit gerencia as telas e a narrativa. AVFoundation lida com a cutscene inicial do jogo e de todos os efeitos sonoros presentes na experiência. ',
         codeSnippet: {
-          filename: 'EvidenceAnalyzer.swift',
+          filename: 'Scenes.swift',
           language: 'swift',
-          code: `func classify(pixelBuffer: CVPixelBuffer) -> [Evidence] {
-    guard let model = try? ClueFinder(configuration: .init())
-    else { return [] }
+          code: `func proximoDialogo() {
+    if dialogos.count > 0 {
+        limparDialogos()
+        dialogos.remove(at: 0)
+    }
 
-    let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer)
-    let request = VNCoreMLRequest(model: model.model)
+    if let dialogo = dialogos.first {
+        exibirMensagem(dialogo: dialogo)
 
-    try? handler.perform([request])
-
-    return (request.results as? [VNClassificationObservation])?
-        .filter { $0.confidence > 0.75 }
-        .map { Evidence(label: $0.identifier, score: $0.confidence) }
-        ?? []
+        switch dialogo.mensageiro.type {
+        case .main:
+            changeTextBox(.nameTagCarrieActive, .textBoxCarrieActive)
+        case .info:
+            changeTextBox(nil, .infoTextBoxActive)
+        default:
+            changeTextBox(.nameTag, .textBox)
+        }
+    }
 }`,
-          caption: 'CoreML classifica o frame da câmera e filtra pistas com confiança acima de 75%.'
+          caption:
+            'Protocolo de cena gerencia a progressão dos diálogos, alternando a interface de acordo com o tipo de mensageiro.'
         }
       }
     ]
@@ -260,6 +269,7 @@ export const projectsData: ProjectData[] = [
   {
     id: 'hermes-tracking',
     title: 'Hermes Tracking',
+    githubUrl: 'https://github.com/GuilhermeNL01/REPO_NAME_HERE',
     description:
       'Centraliza o rastreamento de encomendas, com atualizações em tempo real e notificações automáticas.',
     imageSrc: '/projects/hermes_logo.png',
@@ -318,6 +328,7 @@ export const projectsData: ProjectData[] = [
   {
     id: 'step-quest',
     title: 'Step Quest',
+    githubUrl: 'https://github.com/GuilhermeNL01/MiniChallenge05',
     description:
       'Um app para watchOS que transforma caminhadas diárias em missões de espionagem com desafios.',
     imageSrc: '/projects/step_logo.png',
@@ -373,6 +384,7 @@ export const projectsData: ProjectData[] = [
   {
     id: 'planetarium',
     title: 'Planetarium',
+    githubUrl: 'https://github.com/GuilhermeNL01/REPO_NAME_HERE',
     description:
       'Um app de realidade aumentada para iPad que permite explorar o sistema solar posicionando planetas em ambientes reais.',
     imageSrc: '/projects/planetarium_logo.png',
@@ -428,6 +440,7 @@ export const projectsData: ProjectData[] = [
   {
     id: 'shyne',
     title: 'Shyne',
+    githubUrl: 'https://github.com/GuilhermeNL01/REPO_NAME_HERE',
     description:
       'Um app criado para desenvolver habilidades sociais com exercícios interativos e acompanhamento diário.',
     imageSrc: '/projects/shyne_logo.png',
@@ -482,6 +495,7 @@ export const projectsData: ProjectData[] = [
   {
     id: 'collapse',
     title: 'Collapse',
+    githubUrl: 'https://github.com/GuilhermeNL01/REPO_NAME_HERE',
     description:
       'Um jogo de plataforma 2D em que jogadores exploram um mundo em colapso e dominam mecânicas de movimento para sobreviver.',
     imageSrc: '/projects/collapse_logo.png',
@@ -539,6 +553,7 @@ export const projectsData: ProjectData[] = [
   {
     id: 'my-card-collection',
     title: 'My Card Collection',
+    githubUrl: 'https://github.com/GuilhermeNL01/Card-Collection',
     description:
       'Um gerenciador de coleção de cartas de Magic: The Gathering com busca e recursos de organização.',
     imageSrc: '/projects/mycard_logo.png',

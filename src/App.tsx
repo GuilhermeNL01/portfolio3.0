@@ -8,7 +8,9 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProjectDetail } from './components/ProjectDetail';
 import { cancelSmoothScroll, smoothScrollToId } from './utils/smoothScroll';
-import { ProjectData } from './data/projectsData';
+import { ThemeProvider } from './context/ThemeContext';
+import { About } from './components/About';
+import { ProjectData, projectsData } from './data/projectsData';
 
 export const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
@@ -62,34 +64,45 @@ export const App: React.FC = () => {
     setSelectedProject(null);
   };
 
-  if (selectedProject) {
-    return <ProjectDetail project={selectedProject} onBack={handleBack} />;
-  }
-
   return (
-    <main id="main-content" className="relative z-10 w-full max-w-screen-2xl mx-auto px-4 md:px-8">
-      <a
-        href="#main-sections"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 z-50 bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-900 px-4 py-2 text-sm font-semibold tracking-tight rounded-sm outline-none ring-2 ring-neutral-500 shadow-xl"
-      >
-        Pular para o conteúdo principal
-      </a>
+    <ThemeProvider>
+      {selectedProject ? (
+        <ProjectDetail
+          project={selectedProject}
+          onBack={handleBack}
+          allProjects={projectsData}
+          onProjectSelect={handleProjectSelect}
+        />
+      ) : (
+        <main
+          id="main-content"
+          className="relative z-10 w-full max-w-screen-2xl mx-auto px-4 md:px-8"
+        >
+          <a
+            href="#main-sections"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 z-50 bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-900 px-4 py-2 text-sm font-semibold tracking-tight rounded-sm outline-none ring-2 ring-neutral-500 shadow-xl"
+          >
+            Pular para o conteúdo principal
+          </a>
 
-      <div className="bg-grid-12" aria-hidden="true">
-        {Array.from({ length: 12 }).map((_, index) => (
-          <div key={index} />
-        ))}
-      </div>
+          <div className="bg-grid-12" aria-hidden="true">
+            {Array.from({ length: 12 }).map((_, index) => (
+              <div key={index} />
+            ))}
+          </div>
 
-      <div id="main-sections">
-        <Navbar />
-        <Hero />
-        <TechStack />
-        <Timeline />
-        <ProjectsGrid onProjectSelect={handleProjectSelect} />
-        <Contact />
-        <Footer />
-      </div>
-    </main>
+          <div id="main-sections">
+            <Navbar />
+            <Hero />
+            <About />
+            <TechStack />
+            <Timeline />
+            <ProjectsGrid onProjectSelect={handleProjectSelect} />
+            <Contact />
+            <Footer />
+          </div>
+        </main>
+      )}
+    </ThemeProvider>
   );
 };

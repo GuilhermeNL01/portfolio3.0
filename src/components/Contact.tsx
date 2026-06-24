@@ -1,23 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { sendForm } from '@emailjs/browser';
 import { CheckCircleIcon, SendIcon } from './Icons';
+import { socialLinks } from '../utils/constants';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
-
-const contactLinks = [
-  {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/guilherme-nunes-lobo-12967b258/'
-  },
-  {
-    label: 'GitHub',
-    href: 'https://github.com/GuilhermeNL01'
-  },
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/g_nlobo'
-  }
-] as const;
 
 export const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -69,12 +55,7 @@ export const Contact: React.FC = () => {
     setFormState('loading');
 
     try {
-      await sendForm(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        formRef.current,
-        PUBLIC_KEY
-      );
+      await sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
       setFormState('success');
       formRef.current.reset();
     } catch {
@@ -103,7 +84,7 @@ export const Contact: React.FC = () => {
         </div>
 
         <div className="mt-12 flex flex-wrap gap-3">
-          {contactLinks.map((link) => (
+          {socialLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
@@ -121,7 +102,9 @@ export const Contact: React.FC = () => {
         {formState === 'success' ? (
           <div className="w-full max-w-md flex flex-col gap-4">
             <CheckCircleIcon className="h-12 w-12 text-neutral-900 dark:text-neutral-100" />
-            <h3 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">Mensagem enviada!</h3>
+            <h3 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+              Mensagem enviada!
+            </h3>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">
               Obrigado pelo contato. Vou te responder assim que possível.
             </p>
@@ -133,13 +116,14 @@ export const Contact: React.FC = () => {
             </button>
           </div>
         ) : (
-          <form ref={formRef} onSubmit={handleSubmit} className="w-full max-w-md space-y-10 relative" aria-label="Formulário de contato">
-            
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            className="w-full max-w-md space-y-10 relative"
+            aria-label="Formulário de contato"
+          >
             {/* Honeypot (invisible, no layout impact) */}
-            <div
-              className="absolute left-[-9999px] top-[-9999px] opacity-0"
-              aria-hidden="true"
-            >
+            <div className="absolute left-[-9999px] top-[-9999px] opacity-0" aria-hidden="true">
               <label htmlFor={honeypotName}>Deixe este campo em branco</label>
               <input
                 ref={botFieldRef}

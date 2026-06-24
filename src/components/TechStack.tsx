@@ -1,56 +1,55 @@
 import React from 'react';
+import { DEVICON_BASE_URL } from '../utils/constants';
 
 type TechLogo = {
   name: string;
   logoSrc: string;
 };
 
-const deviconBaseUrl = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons';
-
 const techItems: TechLogo[] = [
   {
     name: 'Swift',
-    logoSrc: `${deviconBaseUrl}/swift/swift-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}swift/swift-original.svg`
   },
   {
     name: 'Xcode',
-    logoSrc: `${deviconBaseUrl}/xcode/xcode-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}xcode/xcode-original.svg`
   },
   {
     name: 'Apple Frameworks',
-    logoSrc: `${deviconBaseUrl}/apple/apple-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}apple/apple-original.svg`
   },
   {
     name: 'React',
-    logoSrc: `${deviconBaseUrl}/react/react-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}react/react-original.svg`
   },
   {
     name: 'TypeScript',
-    logoSrc: `${deviconBaseUrl}/typescript/typescript-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}typescript/typescript-original.svg`
   },
   {
     name: 'JavaScript',
-    logoSrc: `${deviconBaseUrl}/javascript/javascript-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}javascript/javascript-original.svg`
   },
   {
     name: 'HTML5',
-    logoSrc: `${deviconBaseUrl}/html5/html5-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}html5/html5-original.svg`
   },
   {
     name: 'CSS3',
-    logoSrc: `${deviconBaseUrl}/css3/css3-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}css3/css3-original.svg`
   },
   {
     name: 'Tailwind CSS',
-    logoSrc: `${deviconBaseUrl}/tailwindcss/tailwindcss-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}tailwindcss/tailwindcss-original.svg`
   },
   {
     name: 'Node.js',
-    logoSrc: `${deviconBaseUrl}/nodejs/nodejs-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}nodejs/nodejs-original.svg`
   },
   {
     name: 'Git',
-    logoSrc: `${deviconBaseUrl}/git/git-original.svg`
+    logoSrc: `${DEVICON_BASE_URL}git/git-original.svg`
   }
 ];
 

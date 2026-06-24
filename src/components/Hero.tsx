@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { DEVICON_BASE_URL } from '../utils/constants';
 import { ArrowRightIcon, CodeIcon, DocumentIcon } from './Icons';
 
 type CodeSegment = {
@@ -12,8 +13,6 @@ type CodeSnippet = {
   lines: CodeSegment[][];
 };
 
-const deviconBaseUrl = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons';
-
 const syntax = {
   keyword: 'text-[#d83879] dark:text-[#ff7ab2]',
   type: 'text-[#5b21b6] dark:text-[#dabafe]',
@@ -26,16 +25,11 @@ const syntax = {
 const codeSnippets: CodeSnippet[] = [
   {
     fileName: 'Portfolio.swift',
-    logoSrc: `${deviconBaseUrl}/swift/swift-original.svg`,
+    logoSrc: `${DEVICON_BASE_URL}swift/swift-original.svg`,
     lines: [
-      [
-        { text: 'import', className: syntax.keyword },
-        { text: ' SwiftUI' }
-      ],
+      [{ text: 'import', className: syntax.keyword }, { text: ' SwiftUI' }],
       [],
-      [
-        { text: '@main', className: syntax.keyword }
-      ],
+      [{ text: '@main', className: syntax.keyword }],
       [
         { text: 'struct', className: syntax.keyword },
         { text: ' GuilhermeLoboApp', className: syntax.type },
@@ -51,18 +45,9 @@ const codeSnippets: CodeSnippet[] = [
         { text: ' Scene', className: syntax.functionName },
         { text: ' {' }
       ],
-      [
-        { text: '    WindowGroup', className: syntax.functionName },
-        { text: ' {' }
-      ],
-      [
-        { text: '      PortfolioView', className: syntax.type },
-        { text: '()' }
-      ],
-      [
-        { text: '        .preferredColorScheme', className: syntax.property },
-        { text: '(.dark)' }
-      ],
+      [{ text: '    WindowGroup', className: syntax.functionName }, { text: ' {' }],
+      [{ text: '      PortfolioView', className: syntax.type }, { text: '()' }],
+      [{ text: '        .preferredColorScheme', className: syntax.property }, { text: '(.dark)' }],
       [{ text: '    }' }],
       [{ text: '  }' }],
       [{ text: '}' }]
@@ -70,21 +55,15 @@ const codeSnippets: CodeSnippet[] = [
   },
   {
     fileName: 'portfolio.ts',
-    logoSrc: `${deviconBaseUrl}/typescript/typescript-original.svg`,
+    logoSrc: `${DEVICON_BASE_URL}typescript/typescript-original.svg`,
     lines: [
       [
         { text: 'type', className: syntax.keyword },
         { text: ' Project', className: syntax.type },
         { text: ' = {' }
       ],
-      [
-        { text: '  name', className: syntax.property },
-        { text: ': string;' }
-      ],
-      [
-        { text: '  stack', className: syntax.property },
-        { text: ': string[];' }
-      ],
+      [{ text: '  name', className: syntax.property }, { text: ': string;' }],
+      [{ text: '  stack', className: syntax.property }, { text: ': string[];' }],
       [{ text: '};' }],
       [],
       [
@@ -112,28 +91,16 @@ const codeSnippets: CodeSnippet[] = [
       ],
       [{ text: '};' }],
       [],
-      [
-        { text: 'export default', className: syntax.keyword },
-        { text: ' portfolio;' }
-      ]
+      [{ text: 'export default', className: syntax.keyword }, { text: ' portfolio;' }]
     ]
   },
   {
     fileName: 'styles.css',
-    logoSrc: `${deviconBaseUrl}/css3/css3-original.svg`,
+    logoSrc: `${DEVICON_BASE_URL}css3/css3-original.svg`,
     lines: [
-      [
-        { text: '.portfolio', className: syntax.type },
-        { text: ' {' }
-      ],
-      [
-        { text: '  display', className: syntax.property },
-        { text: ': grid;' }
-      ],
-      [
-        { text: '  gap', className: syntax.property },
-        { text: ': 2rem;' }
-      ],
+      [{ text: '.portfolio', className: syntax.type }, { text: ' {' }],
+      [{ text: '  display', className: syntax.property }, { text: ': grid;' }],
+      [{ text: '  gap', className: syntax.property }, { text: ': 2rem;' }],
       [
         { text: '  color', className: syntax.property },
         { text: ': ', className: syntax.punctuation },
@@ -142,24 +109,12 @@ const codeSnippets: CodeSnippet[] = [
       ],
       [{ text: '}' }],
       [],
-      [
-        { text: '.project-card', className: syntax.type },
-        { text: ' {' }
-      ],
-      [
-        { text: '  transition', className: syntax.property },
-        { text: ': transform 220ms ease;' }
-      ],
+      [{ text: '.project-card', className: syntax.type }, { text: ' {' }],
+      [{ text: '  transition', className: syntax.property }, { text: ': transform 220ms ease;' }],
       [{ text: '}' }],
       [],
-      [
-        { text: '.project-card:hover', className: syntax.type },
-        { text: ' {' }
-      ],
-      [
-        { text: '  transform', className: syntax.property },
-        { text: ': translateY(-4px);' }
-      ],
+      [{ text: '.project-card:hover', className: syntax.type }, { text: ' {' }],
+      [{ text: '  transform', className: syntax.property }, { text: ': translateY(-4px);' }],
       [{ text: '}' }]
     ]
   }
@@ -170,7 +125,8 @@ const getLineLength = (line: CodeSegment[]) =>
 
 const getSnippetLength = (snippet: CodeSnippet) =>
   snippet.lines.reduce(
-    (total, line, index) => total + getLineLength(line) + (index < snippet.lines.length - 1 ? 1 : 0),
+    (total, line, index) =>
+      total + getLineLength(line) + (index < snippet.lines.length - 1 ? 1 : 0),
     0
   );
 
@@ -179,7 +135,10 @@ const getVisibleLineLength = (snippet: CodeSnippet, visibleChars: number, lineIn
     .slice(0, lineIndex)
     .reduce((total, line) => total + getLineLength(line) + 1, 0);
 
-  return Math.min(Math.max(visibleChars - previousLength, 0), getLineLength(snippet.lines[lineIndex]));
+  return Math.min(
+    Math.max(visibleChars - previousLength, 0),
+    getLineLength(snippet.lines[lineIndex])
+  );
 };
 
 const getCursorLineIndex = (snippet: CodeSnippet, visibleChars: number) => {
@@ -265,10 +224,7 @@ export const Hero: React.FC = () => {
   }, [isDeleting, snippetLength, visibleChars]);
 
   return (
-    <section
-      className="grid grid-cols-12 grid-border-b pt-24 pb-12"
-      aria-labelledby="hero-heading"
-    >
+    <section className="grid grid-cols-12 grid-border-b pt-24 pb-12" aria-labelledby="hero-heading">
       <div className="col-span-12 md:col-span-8 md:grid-border-r pr-0 md:pr-12 flex flex-col justify-end">
         <div className="animate-fade-in delay-100 space-y-4">
           <p className="text-sm font-medium tracking-tight text-neutral-500 uppercase flex items-center gap-2">
@@ -281,15 +237,13 @@ export const Hero: React.FC = () => {
           >
             Guilherme <br /> Lobo
           </h1>
-          <h2 className="text-2xl md:text-4xl font-medium tracking-tight text-neutral-600 dark:text-neutral-400 mt-2">
-            Desenvolvedor
-          </h2>
         </div>
       </div>
 
       <div className="col-span-12 md:col-span-4 pl-0 md:pl-12 pt-12 md:pt-0 flex flex-col justify-end animate-fade-in delay-200">
         <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-md font-medium">
-          Sou desenvolvedor de software focado em criar aplicações escaláveis, limpas e fáceis de usar.
+          Sou desenvolvedor de software focado em criar aplicações escaláveis, limpas e fáceis de
+          usar.
         </p>
         <div className="flex flex-wrap gap-4 mt-10">
           <a
@@ -329,14 +283,17 @@ export const Hero: React.FC = () => {
           </div>
         </div>
         <div
-          className="min-h-[22rem] p-6 md:p-8 font-mono text-sm md:text-base leading-relaxed text-neutral-700 dark:text-neutral-300 overflow-x-auto"
+          className="h-[26rem] p-6 md:p-8 font-mono text-sm md:text-base leading-relaxed text-neutral-700 dark:text-neutral-300 overflow-x-auto overflow-y-hidden"
           aria-label={`Código animado em ${activeSnippet.fileName}`}
         >
           {activeSnippet.lines.map((line, index) => {
             const visibleLineLength = getVisibleLineLength(activeSnippet, visibleChars, index);
 
             return (
-              <div key={`${activeSnippet.fileName}-${index}`} className="min-h-[1.5em] whitespace-pre">
+              <div
+                key={`${activeSnippet.fileName}-${index}`}
+                className="min-h-[1.5em] whitespace-pre"
+              >
                 {renderLineSegments(line, visibleLineLength)}
                 {cursorLineIndex === index && (
                   <span className="ml-0.5 inline-block h-5 w-2.5 animate-pulse align-middle bg-neutral-400 dark:bg-[#C5DCDC]" />

@@ -274,3 +274,106 @@ body {
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
+
+/* ── Fix border-right for 2-column layout at md breakpoint ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .project-card:nth-child(2n) {
+        border-right: none;
+    }
+}
+
+/* ── Skeleton shimmer for image loading ── */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton-shimmer {
+    background: linear-gradient(
+        90deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.06) 50%,
+        transparent 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ── Prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-in {
+        animation: none;
+        opacity: 1;
+    }
+    .reveal-on-scroll {
+        transition: none;
+        opacity: 1;
+        transform: none;
+    }
+    .node-dot {
+        animation: none;
+        opacity: 1;
+        transform: scale(1);
+    }
+    .skeleton-shimmer {
+        animation: none;
+        background: rgba(255, 255, 255, 0.04);
+    }
+}
+
+/* ── Highlight.js custom theme (matches Hero.tsx syntax colors) ── */
+.hljs {
+    background: transparent;
+    color: #d4d4d8;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-built_in {
+    color: #ff7ab2;
+}
+.hljs-title,
+.hljs-title.function_,
+.hljs-title.class_ {
+    color: #b281eb;
+}
+.hljs-type,
+.hljs-class .hljs-title {
+    color: #dabafe;
+}
+.hljs-string,
+.hljs-regexp,
+.hljs-addition {
+    color: #9ad8d0;
+}
+.hljs-number {
+    color: #9ad8d0;
+}
+.hljs-property,
+.hljs-attr,
+.hljs-attribute {
+    color: #ffd28a;
+}
+.hljs-comment,
+.hljs-quote,
+.hljs-doctag {
+    color: #636366;
+    font-style: italic;
+}
+.hljs-params {
+    color: #d4d4d8;
+}
+.hljs-punctuation {
+    color: #737380;
+}
+.hljs-variable,
+.hljs-template-variable {
+    color: #d4d4d8;
+}
+.hljs-deletion {
+    color: #ff7ab2;
+}

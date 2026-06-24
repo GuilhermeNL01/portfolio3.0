@@ -1,6 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { MoonIcon, SunIcon } from './Icons';
 import { CodeSnippet, ProjectData } from '../data/projectsData';
+import { useTheme } from '../context/ThemeContext';
+import hljs from 'highlight.js/lib/core';
+import swiftLang from 'highlight.js/lib/languages/swift';
+import javascriptLang from 'highlight.js/lib/languages/javascript';
+import typescriptLang from 'highlight.js/lib/languages/typescript';
+
+hljs.registerLanguage('swift', swiftLang);
+hljs.registerLanguage('javascript', javascriptLang);
+hljs.registerLanguage('typescript', typescriptLang);
 
 // ─── Shared SVG ───────────────────────────────────────────────────────────────
 
@@ -20,40 +29,102 @@ const ArrowLeft: React.FC<{ className?: string }> = ({ className = 'h-4 w-4' }) 
   </svg>
 );
 
+// ─── Code block icons ─────────────────────────────────────────────────────────
+
+const CopyIcon: React.FC = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={1.8}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-3.5 w-3.5"
+  >
+    <rect x="9" y="9" width="13" height="13" rx="2" />
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+  </svg>
+);
+
+const CheckIcon: React.FC = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={1.8}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-3.5 w-3.5"
+  >
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
 // ─── Code block ───────────────────────────────────────────────────────────────
 
-const CodeBlock: React.FC<{ snippet: CodeSnippet }> = ({ snippet }) => (
-  <div className="mt-8 rounded-sm overflow-hidden border border-neutral-200 dark:border-neutral-700 reveal-on-scroll">
-    {/* Window chrome */}
-    <div className="flex items-center gap-2 px-4 py-3 bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
-      <div className="flex gap-1.5" aria-hidden="true">
-        <span className="w-3 h-3 rounded-full bg-red-400 dark:bg-red-500" />
-        <span className="w-3 h-3 rounded-full bg-yellow-400 dark:bg-yellow-500" />
-        <span className="w-3 h-3 rounded-full bg-green-400 dark:bg-green-500" />
+const CodeBlock: React.FC<{ snippet: CodeSnippet }> = ({ snippet }) => {
+  const [copied, setCopied] = useState(false);
+
+  const highlighted = useMemo(() => {
+    try {
+      const lang = hljs.getLanguage(snippet.language) ? snippet.language : 'plaintext';
+      return hljs.highlight(snippet.code, { language: lang }).value;
+    } catch {
+      return snippet.code;
+    }
+  }, [snippet.code, snippet.language]);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(snippet.code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {}
+  };
+
+  return (
+    <div className="mt-8 rounded-sm overflow-hidden border border-neutral-200 dark:border-neutral-700 reveal-on-scroll">
+      {/* Window chrome */}
+      <div className="flex items-center gap-2 px-4 py-3 bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
+        <div className="flex gap-1.5" aria-hidden="true">
+          <span className="w-3 h-3 rounded-full bg-red-400 dark:bg-red-500" />
+          <span className="w-3 h-3 rounded-full bg-yellow-400 dark:bg-yellow-500" />
+          <span className="w-3 h-3 rounded-full bg-green-400 dark:bg-green-500" />
+        </div>
+        <span className="ml-3 text-xs font-mono font-medium text-neutral-500 dark:text-neutral-400 truncate">
+          {snippet.filename}
+        </span>
+        <span className="flex-shrink-0 text-[10px] font-semibold tracking-widest uppercase text-neutral-400 dark:text-neutral-600">
+          {snippet.language}
+        </span>
+        <button
+          onClick={handleCopy}
+          className={`ml-auto p-1.5 rounded-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-500 ${
+            copied ? 'text-green-400' : 'text-neutral-500 hover:text-neutral-200'
+          }`}
+          aria-label={copied ? 'Copiado!' : 'Copiar código'}
+          title={copied ? 'Copiado!' : 'Copiar código'}
+        >
+          {copied ? <CheckIcon /> : <CopyIcon />}
+        </button>
       </div>
-      <span className="ml-3 text-xs font-mono font-medium text-neutral-500 dark:text-neutral-400 truncate">
-        {snippet.filename}
-      </span>
-      <span className="ml-auto flex-shrink-0 text-[10px] font-semibold tracking-widest uppercase text-neutral-400 dark:text-neutral-600">
-        {snippet.language}
-      </span>
+
+      {/* Code body */}
+      <pre className="bg-[#0e0e0e] px-6 py-5 overflow-x-auto text-sm leading-7 font-mono">
+        <code className="hljs" dangerouslySetInnerHTML={{ __html: highlighted }} />
+      </pre>
+
+      {/* Caption */}
+      {snippet.caption && (
+        <div className="px-4 py-3 bg-neutral-50 dark:bg-[#1B1B18] border-t border-neutral-200 dark:border-neutral-700">
+          <p className="text-xs text-neutral-500 dark:text-neutral-500 leading-relaxed">
+            {snippet.caption}
+          </p>
+        </div>
+      )}
     </div>
-
-    {/* Code body */}
-    <pre className="bg-[#0e0e0e] px-6 py-5 overflow-x-auto text-sm leading-7 font-mono">
-      <code className="text-neutral-200">{snippet.code}</code>
-    </pre>
-
-    {/* Caption */}
-    {snippet.caption && (
-      <div className="px-4 py-3 bg-neutral-50 dark:bg-[#1B1B18] border-t border-neutral-200 dark:border-neutral-700">
-        <p className="text-xs text-neutral-500 dark:text-neutral-500 leading-relaxed">
-          {snippet.caption}
-        </p>
-      </div>
-    )}
-  </div>
-);
+  );
+};
 
 // ─── Disclaimer banner ────────────────────────────────────────────────────────
 
@@ -103,7 +174,9 @@ const DisclaimerBanner: React.FC<{ status: ProjectData['status'] }> = ({ status 
         {/* Text */}
         <div>
           <p
-            className={`text-xs font-semibold uppercase tracking-widest mb-1 ${isExpired ? 'text-amber-600 dark:text-amber-400' : 'text-blue-600 dark:text-blue-400'}`}
+            className={`text-xs font-semibold uppercase tracking-widest mb-1 ${
+              isExpired ? 'text-amber-600 dark:text-amber-400' : 'text-blue-600 dark:text-blue-400'
+            }`}
           >
             {isExpired ? 'Disponibilidade Limitada' : 'Em Desenvolvimento'}
           </p>
@@ -125,25 +198,29 @@ const DEVICON_BASE = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/
 type Props = {
   project: ProjectData;
   onBack: () => void;
+  allProjects: ProjectData[];
+  onProjectSelect: (project: ProjectData) => void;
 };
 
-type Theme = 'light' | 'dark';
-
-export const ProjectDetail: React.FC<Props> = ({ project, onBack }) => {
+export const ProjectDetail: React.FC<Props> = ({
+  project,
+  onBack,
+  allProjects,
+  onProjectSelect
+}) => {
   const [activeSection, setActiveSection] = useState(project.sections[0]?.id ?? '');
-  const [theme, setTheme] = useState<Theme>(() =>
-    document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-  );
+  const { theme, toggleTheme } = useTheme();
 
-  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
-
+  // ── Document title ──────────────────────────────────────────────────────────
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    try {
-      localStorage.setItem('theme', theme);
-    } catch {}
-  }, [theme]);
+    const previousTitle = document.title;
+    document.title = `${project.title} | Guilherme Lobo`;
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [project.title]);
 
+  // ── Scroll + observers ──────────────────────────────────────────────────────
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     setActiveSection(project.sections[0]?.id ?? '');
@@ -190,6 +267,11 @@ export const ProjectDetail: React.FC<Props> = ({ project, onBack }) => {
       clearTimeout(timer);
     };
   }, [project]);
+
+  // ── Prev / Next ─────────────────────────────────────────────────────────────
+  const currentIndex = allProjects.findIndex((p) => p.id === project.id);
+  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(`section-${id}`);
@@ -282,6 +364,57 @@ export const ProjectDetail: React.FC<Props> = ({ project, onBack }) => {
           <p className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-2xl">
             {project.description}
           </p>
+
+          {(project.githubUrl || project.demoUrl) && (
+            <div className="flex flex-wrap gap-3 mt-6">
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold tracking-tight border border-neutral-900/15 dark:border-[#C5DCDC]/25 text-neutral-800 dark:text-neutral-200 rounded-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500"
+                >
+                  Ver no GitHub
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.8}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-3.5 w-3.5"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17 17 7" />
+                  </svg>
+                </a>
+              )}
+              {project.demoUrl && (
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold tracking-tight bg-neutral-900 dark:bg-neutral-100 text-neutral-50 dark:text-neutral-950 rounded-sm hover:bg-neutral-800 dark:hover:bg-neutral-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500"
+                >
+                  Ver projeto
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.8}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-3.5 w-3.5"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17 17 7" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         {/* ── Project Banner ── */}
@@ -451,16 +584,62 @@ export const ProjectDetail: React.FC<Props> = ({ project, onBack }) => {
               </section>
             ))}
 
-            {/* Bottom back navigation */}
+            {/* Bottom navigation */}
             <div className="border-t border-[var(--border-color)] py-10">
-              <button
-                type="button"
-                onClick={onBack}
-                className="flex items-center gap-2 text-sm font-semibold tracking-tight text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
-              >
-                <ArrowLeft />
-                Voltar para Projetos
-              </button>
+              <div className="flex items-center justify-between gap-4">
+                {/* Prev */}
+                <div className="flex-1 flex justify-start">
+                  {prevProject && (
+                    <button
+                      type="button"
+                      onClick={() => onProjectSelect(prevProject)}
+                      className="flex items-center gap-2 text-sm font-semibold tracking-tight text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm text-left group"
+                    >
+                      <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+                      <span className="hidden sm:block truncate max-w-[140px]">
+                        {prevProject.title}
+                      </span>
+                    </button>
+                  )}
+                </div>
+
+                {/* Back to all projects */}
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="flex-shrink-0 text-sm font-semibold tracking-tight text-neutral-400 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
+                >
+                  Todos os projetos
+                </button>
+
+                {/* Next */}
+                <div className="flex-1 flex justify-end">
+                  {nextProject && (
+                    <button
+                      type="button"
+                      onClick={() => onProjectSelect(nextProject)}
+                      className="flex items-center gap-2 text-sm font-semibold tracking-tight text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm text-right group"
+                    >
+                      <span className="hidden sm:block truncate max-w-[140px]">
+                        {nextProject.title}
+                      </span>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.8}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-4 w-4 flex-shrink-0 group-hover:translate-x-0.5 transition-transform"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 12h14" />
+                        <path d="m13 6 6 6-6 6" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </article>
         </div>
