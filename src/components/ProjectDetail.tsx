@@ -300,11 +300,15 @@ export const ProjectDetail: React.FC<Props> = ({
             <button
               type="button"
               onClick={onBack}
-              className="text-xl font-semibold tracking-tighter uppercase hover:opacity-60 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
+              className="hover:opacity-60 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded-sm"
               aria-label="Voltar para o início"
               title="Voltar para o início"
             >
-              GL
+              <img
+                src={theme === 'dark' ? '/Logo branca.svg' : '/Logo preta.svg'}
+                alt="Guilherme Lobo"
+                className="h-8 w-auto object-contain"
+              />
             </button>
 
             {/* Theme toggle */}

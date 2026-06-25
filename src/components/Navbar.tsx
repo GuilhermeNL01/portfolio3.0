@@ -27,10 +27,11 @@ export const Navbar: React.FC = () => {
         aria-label="Navegação principal"
       >
         <div className="col-span-2 md:col-span-4 flex items-center">
-          <span className="text-xl font-semibold tracking-tighter uppercase" aria-hidden="true">
-            GL
-          </span>
-          <span className="sr-only">Guilherme Lobo</span>
+          <img
+            src={theme === 'dark' ? '/Logo branca.svg' : '/Logo preta.svg'}
+            alt="Guilherme Lobo"
+            className="h-8 w-auto object-contain"
+          />
         </div>
 
         <div className="col-span-2 md:col-span-8 flex justify-end items-center gap-4 text-sm font-medium tracking-tight text-neutral-700 dark:text-neutral-300">

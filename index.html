@@ -1,40 +1,64 @@
 <!doctype html>
-<html lang="pt-BR" class="scroll-smooth bg-white text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white dark:bg-[#131311] dark:text-neutral-200 dark:selection:bg-[#C5DCDC] dark:selection:text-[#131311]">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfólio de Guilherme Lobo, desenvolvedor iOS e desenvolvedor de software." />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#131311" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="pt_BR" />
-    <meta property="og:title" content="Guilherme Lobo | Desenvolvedor iOS" />
-    <meta property="og:description" content="Portfólio de Guilherme Lobo, desenvolvedor iOS e desenvolvedor de software." />
-    <meta property="og:image" content="/og-image.png" />
-    <meta property="og:image:alt" content="Marca GL de Guilherme Lobo" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Guilherme Lobo | Desenvolvedor iOS" />
-    <meta name="twitter:description" content="Portfólio de Guilherme Lobo, desenvolvedor iOS e desenvolvedor de software." />
-    <meta name="twitter:image" content="/og-image.png" />
-    <link rel="icon" type="image/png" href="/favicon-light.png" media="(prefers-color-scheme: light)" />
-    <link rel="icon" type="image/png" href="/favicon-dark.png" media="(prefers-color-scheme: dark)" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <title>Guilherme Lobo | Desenvolvedor iOS</title>
+<html
+    lang="pt-BR"
+    class="scroll-smooth bg-white text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white dark:bg-[#131311] dark:text-neutral-200 dark:selection:bg-[#C5DCDC] dark:selection:text-[#131311]"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Portfólio de Guilherme Lobo, desenvolvedor iOS e desenvolvedor de software."
+        />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#131311" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="pt_BR" />
+        <meta property="og:title" content="Guilherme Lobo | Desenvolvedor iOS" />
+        <meta
+            property="og:description"
+            content="Portfólio de Guilherme Lobo, desenvolvedor iOS e desenvolvedor de software."
+        />
+        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:image:alt" content="Marca GL de Guilherme Lobo" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Guilherme Lobo | Desenvolvedor iOS" />
+        <meta
+            name="twitter:description"
+            content="Portfólio de Guilherme Lobo, desenvolvedor iOS e desenvolvedor de software."
+        />
+        <meta name="twitter:image" content="/og-image.png" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="/Logo%20preta.svg"
+            media="(prefers-color-scheme: light)"
+        />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="/Logo%20branca.svg"
+            media="(prefers-color-scheme: dark)"
+        />
+        <link rel="apple-touch-icon" href="/Logo%20preta.svg" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <title>Guilherme Lobo | Desenvolvedor iOS</title>
 
-    <script>
-      try {
-        const storedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = storedTheme || (prefersDark ? 'dark' : 'light');
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-      } catch {
-        document.documentElement.classList.remove('dark');
-      }
-    </script>
-  </head>
-  <body class="font-sans font-normal flex flex-col min-h-screen relative overflow-x-hidden bg-white text-neutral-900 transition-colors duration-300 dark:bg-[#131311] dark:text-neutral-200">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+        <script>
+            try {
+                const storedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = storedTheme || (prefersDark ? 'dark' : 'light');
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+            } catch {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+    </head>
+    <body
+        class="font-sans font-normal flex flex-col min-h-screen relative overflow-x-hidden bg-white text-neutral-900 transition-colors duration-300 dark:bg-[#131311] dark:text-neutral-200"
+    >
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
 </html>

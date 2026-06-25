@@ -39,12 +39,13 @@ export const projectsData: ProjectData[] = [
   {
     id: 'sistema-confeitaria',
     title: 'Sistema Confeitaria',
+    demoUrl: 'https://confeitaria-umber.vercel.app/',
     description:
       'Site e Sistema de gerenciamento para uma confeitaria, incluindo controle de estoque, vendas e relatórios financeiros.',
     imageSrc: '/projects/confeitaria_logo.png',
     imageAlt: 'Prévia do projeto Sistema Confeitaria',
     tags: ['React', 'JavaScript', 'Vite', 'Node.js', 'Express', 'PostgreSQL'],
-    status: 'web',
+    status: 'in-development',
     techStack: [
       { name: 'React', devicon: 'react/react-original' },
       { name: 'JavaScript', devicon: 'javascript/javascript-original' },
@@ -58,8 +59,8 @@ export const projectsData: ProjectData[] = [
         id: 'problema',
         title: 'O Problema',
         content:
-          'Gerenciar uma confeitaria com planilhas e cadernos de anotações é lento, impreciso e impossibilita ter uma visão clara do negócio em tempo real. Pedidos se perdem, o estoque é subgerenciado e os relatórios financeiros surgem apenas no fim do mês — tarde demais para tomar decisões ágeis.',
-        image: '/projects/confeitaria_logo.png',
+          'A confeitaria utilizava um sistema legado desenvolvido como uma aplicação Java local, com interface desatualizada e acesso restrito a uma única máquina. A solução dificultava a manutenção, limitava a escalabilidade do negócio e impedia o acompanhamento das operações em tempo real, tornando a gestão de pedidos, estoque e informações financeiras menos eficiente.',
+        image: '/projects/confeitaria_redacted.png',
         imageAlt: 'Sistema Confeitaria'
       },
       {
@@ -92,6 +93,14 @@ export const projectsData: ProjectData[] = [
 })`,
           caption: 'Rota Express autenticada que atualiza estoque e preço com timestamp automático.'
         }
+      },
+      {
+        id: 'resultado',
+        title: 'O Resultado',
+        content:
+          'O sistema entrou em uso real na confeitaria, substituindo completamente o controle manual por planilhas. O painel administrativo centraliza estoque, pedidos, vendas e relatórios em uma única interface.',
+        image: '/projects/conf_final.png',
+        imageAlt: 'Interface final do Sistema Confeitaria'
       }
     ]
   },
@@ -103,7 +112,7 @@ export const projectsData: ProjectData[] = [
     imageSrc: '/projects/reel_logo.png',
     imageAlt: 'Prévia do projeto Reelstack',
     tags: ['React', 'TypeScript', 'Vite'],
-    status: 'web',
+    status: 'in-development',
     techStack: [
       { name: 'React', devicon: 'react/react-original' },
       { name: 'TypeScript', devicon: 'typescript/typescript-original' },
@@ -157,7 +166,7 @@ export const projectsData: ProjectData[] = [
     imageSrc: '/projects/portfolio_logo.png',
     imageAlt: 'Prévia do projeto Portfólio',
     tags: ['Tailwind CSS', 'React', 'TypeScript', 'Vite'],
-    status: 'web',
+    status: 'in-development',
     techStack: [
       { name: 'React', devicon: 'react/react-original' },
       { name: 'TypeScript', devicon: 'typescript/typescript-original' },
@@ -559,7 +568,7 @@ export const projectsData: ProjectData[] = [
     imageSrc: '/projects/mycard_logo.png',
     imageAlt: 'Prévia do projeto My Card Collection',
     tags: ['SwiftUI', 'SwiftData', 'REST API'],
-    status: 'in-development',
+    status: 'signature-expired',
     techStack: [
       { name: 'Swift', devicon: 'swift/swift-original' },
       { name: 'Xcode', devicon: 'xcode/xcode-original' },
