@@ -182,7 +182,7 @@ const DisclaimerBanner: React.FC<{ status: ProjectData['status'] }> = ({ status 
           </p>
           <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-2xl">
             {isExpired
-              ? 'Este app foi desenvolvido com uma conta Apple Developer pessoal. A assinatura expirou e o app não pode ser instalado em novos dispositivos sem nova assinatura — disponível via TestFlight ou Xcode mediante solicitação.'
+              ? 'Este app foi desenvolvido com uma conta Apple Developer pessoal. A assinatura expirou e o app não pode ser instalado em novos dispositivos sem nova assinatura, disponível via TestFlight ou Xcode mediante solicitação.'
               : 'Este projeto está em desenvolvimento ativo. Algumas funcionalidades podem estar incompletas ou sujeitas a mudanças nas próximas versões.'}
           </p>
         </div>
@@ -572,13 +572,43 @@ export const ProjectDetail: React.FC<Props> = ({
                   </div>
                 )}
 
+                {/* Screenshots gallery */}
+                {section.screenshots && section.screenshots.length > 0 && (
+                  <div className="mt-10 reveal-on-scroll">
+                    <div className="flex gap-3 overflow-x-auto pb-3 -mx-1 px-1">
+                      {section.screenshots.map((src, i) => (
+                        <img
+                          key={i}
+                          src={src}
+                          alt={`Screenshot ${i + 1}`}
+                          className="h-[340px] w-auto flex-shrink-0 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-md object-cover object-top"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Video */}
+                {section.video && (
+                  <div className="mt-10 flex justify-center reveal-on-scroll">
+                    <video
+                      className="w-full max-w-3xl rounded-sm border border-neutral-200 dark:border-neutral-800 bg-black"
+                      controls
+                      preload="metadata"
+                      playsInline
+                      poster={section.videoPoster}
+                    >
+                      <source src={section.video} type="video/mp4" />
+                    </video>
+                  </div>
+                )}
                 {/* Section image */}
                 {section.image && (
                   <div className="mt-10 max-w-2xl reveal-on-scroll rounded-sm overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
                     <img
                       src={section.image}
                       alt={section.imageAlt ?? section.title}
-                      className="w-full object-contain max-h-72"
+                      className={`w-full ${section.imageCover ? 'object-cover h-96' : 'object-contain max-h-72'}`}
                       onError={(e) => {
                         (e.currentTarget.parentElement as HTMLElement).style.display = 'none';
                       }}
